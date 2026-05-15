@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller Presencial CDMX – Are Corona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --pink:#E8527A;
+    --pink-light:#F7C5D5;
+    --pink-pale:#FDF0F4;
+    --gold:#F5C242;
+    --dark:#1A1018;
+    --dark-mid:#3D2535;
+    --body:#5A3D4A;
+    --muted:#9A7E87;
+    --white:#FFFFFF;
+    --off:#FBF7F8;
+    --border:#F0DDE4;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;color:var(--body);background:var(--white);line-height:1.7;overflow-x:hidden}
+
+  /* ── HERO ── */
+  .hero{background:var(--dark);position:relative;overflow:hidden;padding:0}
+  .hero-inner{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;max-width:1200px;margin:0 auto}
+  .hero-left{padding:80px 60px 80px 40px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+  .hero-right{position:relative;display:flex;align-items:flex-end;justify-content:center}
+  .hero-right img{width:100%;height:100%;object-fit:cover;object-position:top center}
+
+  .badge-top{display:inline-flex;align-items:center;gap:8px;background:rgba(232,82,122,0.15);border:1px solid rgba(232,82,122,0.4);border-radius:50px;padding:6px 16px;margin-bottom:28px;width:fit-content}
+  .badge-top span{font-size:13px;font-weight:500;color:var(--pink-light);letter-spacing:0.04em;text-transform:uppercase}
+  .badge-dot{width:7px;height:7px;border-radius:50%;background:var(--pink);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,60px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:20px}
+  .hero-title em{color:var(--pink);font-style:italic}
+  .hero-subtitle{font-size:18px;color:rgba(255,255,255,0.65);margin-bottom:36px;max-width:460px;line-height:1.6}
+  .hero-date-box{display:flex;gap:20px;margin-bottom:40px;flex-wrap:wrap}
+  .date-pill{background:#ffffff;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:10px}
+  .date-pill svg{flex-shrink:0;opacity:.7}
+  .date-pill-label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#ff3694;margin-bottom:2px}
+  .date-pill-val{font-size:15px;font-weight:600;color:#ff3694}
+
+  .hero-price{margin-bottom:36px}
+  .price-old{font-size:16px;color:rgba(255,255,255,0.35);text-decoration:line-through;margin-bottom:4px}
+  .price-new{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--gold);line-height:1}
+  .price-new sup{font-size:22px;vertical-align:top;margin-top:10px;display:inline-block}
+  .price-label{font-size:14px;color:rgba(255,255,255,0.45);margin-top:6px}
+
+  .cta-btn{display:inline-block;background:var(--pink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;padding:18px 40px;border-radius:50px;text-decoration:none;transition:all .25s;box-shadow:0 8px 32px rgba(232,82,122,0.4)}
+  .cta-btn:hover{background:#d43d67;transform:translateY(-2px);box-shadow:0 14px 40px rgba(232,82,122,0.5)}
+  .cta-note{margin-top:12px;font-size:13px;color:rgba(255,255,255,0.35)}
+
+  .hero-bg-circle{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,82,122,0.12) 0%,transparent 70%);right:-100px;top:50%;transform:translateY(-50%);z-index:0}
+
+  /* ── URGENCY BAR ── */
+  .urgency-bar{background:var(--pink);padding:14px 24px;text-align:center}
+  .urgency-bar p{color:var(--white);font-size:15px;font-weight:500}
+  .urgency-bar strong{font-weight:700}
+
+  /* ── SECTIONS ── */
+  .section{padding:80px 24px}
+  .section-inner{max-width:1080px;margin:0 auto}
+  .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.12em;color:var(--pink);font-weight:600;margin-bottom:12px}
+  .section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;color:var(--dark);line-height:1.15;margin-bottom:16px}
+  .section-title em{color:var(--pink);font-style:italic}
+  .section-body{font-size:17px;color:var(--body);max-width:640px;line-height:1.75}
+
+  /* ── FOR WHO ── */
+  .for-who{background:var(--off)}
+  .for-who-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:52px}
+  .pain-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .pain-item{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:var(--white);border-radius:16px;border:1px solid var(--border)}
+  .pain-icon{width:36px;height:36px;border-radius:10px;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+  .pain-text{font-size:15px;color:var(--dark-mid);line-height:1.5}
+  .for-who-right{display:flex;flex-direction:column;gap:16px}
+  .highlight-box{background:var(--dark);border-radius:20px;padding:32px;color:var(--white)}
+  .highlight-box p{font-size:17px;line-height:1.7;color:rgba(255,255,255,0.8)}
+  .highlight-box strong{color:var(--pink-light)}
+
+  /* ── WHAT YOU GET ── */
+  .includes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:48px}
+  .include-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:28px 24px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+  .include-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(232,82,122,0.1)}
+  .include-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink)}
+  .include-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--pink-light);line-height:1;margin-bottom:10px}
+  .include-title{font-size:16px;font-weight:600;color:var(--dark);margin-bottom:8px}
+  .include-desc{font-size:14px;color:var(--muted);line-height:1.6}
+
+  /* ── AGENDA ── */
+  .agenda-section{background:var(--dark)}
+  .agenda-section .section-title{color:var(--white)}
+  .agenda-section .section-label{color:var(--pink-light)}
+  .agenda-section .section-body{color:rgba(255,255,255,0.6)}
+  .agenda-list{display:flex;flex-direction:column;gap:0;margin-top:48px;max-width:720px}
+  .agenda-item{display:flex;gap:24px;position:relative;padding-bottom:32px}
+  .agenda-item:last-child{padding-bottom:0}
+  .agenda-item:last-child .agenda-line{display:none}
+  .agenda-left{display:flex;flex-direction:column;align-items:center;width:48px;flex-shrink:0}
+  .agenda-dot{width:48px;height:48px;border-radius:50%;background:rgba(232,82,122,0.15);border:2px solid rgba(232,82,122,0.4);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--pink);flex-shrink:0;position:relative;z-index:1}
+  .agenda-line{position:absolute;left:23px;top:48px;bottom:0;width:2px;background:rgba(255,255,255,0.06)}
+  .agenda-content{padding-top:0;display:flex;flex-direction:column;justify-content:center;min-height:48px}
+  .agenda-title{font-size:17px;font-weight:600;color:var(--white);margin-bottom:6px}
+  .agenda-desc{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6}
+
+  /* ── BONOS ── */
+  .bonos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:48px}
+  .bono-card{background:var(--pink-pale);border:1px solid var(--pink-light);border-radius:16px;padding:22px 20px;display:flex;align-items:flex-start;gap:14px}
+  .bono-icon{font-size:24px;flex-shrink:0;width:40px;text-align:center}
+  .bono-title{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:4px}
+  .bono-desc{font-size:13px;color:var(--muted)}
+
+  /* ── ABOUT ── */
+  .about-section{background:var(--off)}
+  .about-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:center}
+  .about-img-wrap{position:relative}
+  .about-img-bg{background:var(--pink-pale);border-radius:24px;width:100%;padding-top:130%;position:relative;overflow:hidden}
+  .about-img-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+  .about-badge{position:absolute;bottom:-16px;right:-16px;background:var(--dark);border-radius:16px;padding:16px 20px;text-align:center;border:3px solid var(--white)}
+  .about-badge-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--pink);line-height:1}
+  .about-badge-label{font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
+  .stat-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 16px}
+  .stat-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--pink);margin-bottom:2px}
+  .stat-label{font-size:13px;color:var(--muted)}
+
+  /* ── PRICING ── */
+  .pricing-section{background:var(--dark)}
+  .price-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:28px;padding:48px 40px;max-width:640px;margin:48px auto 0;position:relative;overflow:hidden}
+  .price-card::before{content:'PRECIO ESPECIAL';position:absolute;top:24px;right:-32px;background:var(--pink);color:var(--white);font-size:11px;font-weight:700;letter-spacing:0.1em;padding:6px 48px;transform:rotate(45deg);transform-origin:center}
+  .price-card-header{text-align:center;margin-bottom:40px}
+  .price-was{font-size:16px;color:rgba(255,255,255,0.35);text-decoration:line-through;margin-bottom:6px}
+  .price-now{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:var(--gold);line-height:1}
+  .price-note{font-size:14px;color:rgba(255,255,255,0.4);margin-top:8px}
+  .price-includes{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
+  .price-includes li{display:flex;align-items:center;gap:12px;font-size:16px;color:rgba(255,255,255,0.8)}
+  .check-circle{width:22px;height:22px;border-radius:50%;background:rgba(232,82,122,0.2);border:1px solid rgba(232,82,122,0.5);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .check-circle svg{width:12px;height:12px}
+  .cta-btn-big{display:block;background:var(--pink);color:var(--white);font-size:18px;font-weight:700;padding:20px 32px;border-radius:50px;text-decoration:none;text-align:center;transition:all .25s;box-shadow:0 8px 32px rgba(232,82,122,0.4);width:100%}
+  .cta-btn-big:hover{background:#d43d67;transform:translateY(-2px)}
+  .pricing-section .section-title{color:var(--white)}
+  .pricing-section .section-label{color:var(--pink-light)}
+  .limited-note{text-align:center;margin-top:20px;font-size:14px;color:rgba(255,255,255,0.4)}
+  .limited-note strong{color:var(--pink-light)}
+
+  /* ── FAQ ── */
+  .faq-list{max-width:680px;margin:48px auto 0;display:flex;flex-direction:column;gap:12px}
+  .faq-item{background:var(--off);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .faq-q{width:100%;text-align:left;background:none;border:none;padding:20px 24px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;color:var(--dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .faq-q:hover{color:var(--pink)}
+  .faq-chevron{transition:transform .3s;flex-shrink:0;color:var(--pink)}
+  .faq-a{padding:0 24px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;font-size:15px;color:var(--body);line-height:1.7}
+  .faq-item.open .faq-a{max-height:300px;padding:0 24px 20px}
+  .faq-item.open .faq-chevron{transform:rotate(180deg)}
+
+  /* ── FINAL CTA ── */
+  .final-cta{background:var(--pink);padding:80px 24px;text-align:center}
+  .final-cta h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:900;color:var(--white);margin-bottom:16px;line-height:1.2}
+  .final-cta p{font-size:18px;color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 40px}
+  .cta-btn-white{display:inline-block;background:var(--white);color:var(--pink);font-size:17px;font-weight:700;padding:18px 44px;border-radius:50px;text-decoration:none;transition:all .25s;box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+  .cta-btn-white:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,0.2)}
+
+  /* ── FOOTER ── */
+  footer{background:var(--dark);padding:32px 24px;text-align:center}
+  footer p{font-size:13px;color:rgba(255,255,255,0.3)}
+  footer a{color:rgba(255,255,255,0.5);text-decoration:none}
+
+  /* ── DIVIDER ── */
+  .divider{width:60px;height:3px;background:var(--pink);border-radius:2px;margin:16px 0 32px}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr;min-height:auto}
+    .hero-right{display:none}
+    .hero-left{padding:60px 28px}
+    .for-who-grid{grid-template-columns:1fr}
+    .about-inner{grid-template-columns:1fr}
+    .about-img-wrap{max-width:360px;margin:0 auto}
+    .price-card{padding:36px 24px}
+  }
+  @media(max-width:600px){
+    .hero-date-box{flex-direction:column;gap:10px}
+    .includes-grid{grid-template-columns:1fr}
+    .bonos-grid{grid-template-columns:1fr}
+    .about-stats{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="badge-top">
+        <span class="badge-dot"></span>
+        <span>Taller Presencial · CDMX</span>
+      </div>
+
+      <h1 class="hero-title">
+        Crea tu tienda online<br>
+        <em>en un solo día</em><br>
+        y vende sin parar
+      </h1>
+      <p class="hero-subtitle">
+        4 horas intensivas para que tu negocio deje de depender del WhatsApp y empiece a vender 24/7, aunque estés dormida.
+      </p>
+
+      <div class="hero-date-box">
+        <div class="date-pill">
+          <svg width="20" height="20" fill="none" stroke="#b11f5f" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div>
+            <div class="date-pill-label">Fecha</div>
+            <div class="date-pill-val">Jueves 21 de Mayo</div>
+          </div>
+        </div>
+        <div class="date-pill">
+          <svg width="20" height="20" fill="none" stroke="#b11f5f" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          <div>
+            <div class="date-pill-label">Horario</div>
+            <div class="date-pill-val">1:00 pm – 5:00 pm</div>
+          </div>
+        </div>
+        <div class="date-pill">
+          <svg width="20" height="20" fill="none" stroke="#b11f5f" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <div>
+            <div class="date-pill-label">Oficinas Tiendanube</div>
+            <div class="date-pill-val">Av. Sonora 46, Roma Norte, CDMX</div>
+          </div>
+        </div>
+        <div class="date-pill">
+          <svg width="20" height="20" fill="none" stroke="#b11f5f" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <div>
+            <div class="date-pill-label">Cupo</div>
+            <div class="date-pill-val">Solo 15 lugares</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-price">
+        <div class="price-old">Precio regular: $1,800 MXN</div>
+        <div class="price-new"><sup>$</sup>999<sup style="font-size:20px;margin-top:16px"> MXN</sup></div>
+        <div class="price-label">Inversión única · Sin mensualidades</div>
+      </div>
+
+      <a href="https://www.arecorona.com/productos/taller-presencial-cdmx" target="_blank" class="cta-btn">
+        Quiero mi lugar →
+      </a>
+    </div>
+
+    <div class="hero-right">
+      <img src="https://d1a9qnv764bsoo.cloudfront.net/stores/004/380/368/rte/ARE1.png" alt="Are Corona – Estratega en Ecommerce & Automatización">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ URGENCY BAR ══════════ -->
+<div class="urgency-bar">
+  <p>⚡ <strong>Cupo limitado a 15 personas.</strong> Oficinas de Tiendanube CDMX · 21 de Mayo · $999 MXN con tienda online gratis por 1 año incluida</p>
+</div>
+
+<!-- ══════════ ¿PARA QUIÉN? ══════════ -->
+<section class="section for-who">
+  <div class="section-inner">
+    <p class="section-label">¿Esto es para ti?</p>
+    <h2 class="section-title">Tu negocio ya vende.<br><em>Pero tú sigues siendo el sistema.</em></h2>
+    <div class="divider"></div>
+
+    <div class="for-who-grid">
+      <ul class="pain-list">
+        <li class="pain-item">
+          <div class="pain-icon">📲</div>
+          <div class="pain-text">Respondes cotizaciones y pagos por WhatsApp todo el día, y si no estás, no vendes.</div>
+        </li>
+        <li class="pain-item">
+          <div class="pain-icon">😩</div>
+          <div class="pain-text">Facturas bien, pero sientes que trabajas el doble y el dinero no se queda.</div>
+        </li>
+        <li class="pain-item">
+          <div class="pain-icon">👀</div>
+          <div class="pain-text">Ves negocios más chicos que el tuyo con tiendas profesionales y piensas: "¿qué estoy haciendo mal?"</div>
+        </li>
+        <li class="pain-item">
+          <div class="pain-icon">💻</div>
+          <div class="pain-text">Quieres una tienda online pero no sabes por dónde empezar ni en quién confiar.</div>
+        </li>
+      </ul>
+
+      <div class="for-who-right">
+        <div class="highlight-box">
+          <p style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:16px">Si alguna de estas frases te suena conocida…</p>
+          <p><strong>"Siento que hago de todo pero nada está ordenado."</strong></p>
+          <p style="margin-top:12px"><strong>"Me escriben mucho, pero no todos compran."</strong></p>
+          <p style="margin-top:12px"><strong>"Ya no quiero depender solo de Instagram."</strong></p>
+          <p style="margin-top:24px;font-size:16px">Este taller fue diseñado exactamente para ti. No para quien está comenzando desde cero, sino para la empresaria que ya tiene un negocio real y quiere el sistema que se lo merece.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ QUÉ INCLUYE ══════════ -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label">Lo que construiremos juntas</p>
+    <h2 class="section-title">En 4 horas te llevas<br><em>tu tienda lista para vender</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">No es un curso teórico. Es un taller donde pones las manos en tu negocio, y yo estoy a tu lado en cada paso.</p>
+
+    <div class="includes-grid">
+      <div class="include-card">
+        <div class="include-num">01</div>
+        <div class="include-title">Identidad visual de tu tienda</div>
+        <div class="include-desc">Tu tienda reflejará el branding de tu negocio desde el primer día. Nada de plantillas genéricas.</div>
+      </div>
+      <div class="include-card">
+        <div class="include-num">02</div>
+        <div class="include-title">Inventario y productos con IA</div>
+        <div class="include-desc">Cargas tus productos con fotos y descripciones potenciadas por herramientas de Inteligencia Artificial.</div>
+      </div>
+      <div class="include-card">
+        <div class="include-num">03</div>
+        <div class="include-title">Pagos integrados y automáticos</div>
+        <div class="include-desc">Acepta pagos con tarjeta de crédito, débito, efectivo y más. Tu cliente paga sola, sin que tú tengas que intervenir.</div>
+      </div>
+      <div class="include-card">
+        <div class="include-num">04</div>
+        <div class="include-title">Envíos configurados desde el día 1</div>
+        <div class="include-desc">Envíos automatizados para productos físicos o digitales. Solo imprimes tu guía y listo.</div>
+      </div>
+      <div class="include-card">
+        <div class="include-num">05</div>
+        <div class="include-title">Herramientas clave de negocio</div>
+        <div class="include-desc">ChatGPT, Gemini, Canva y más aplicados directamente a tu tienda para que vendas más con menos esfuerzo.</div>
+      </div>
+      <div class="include-card">
+        <div class="include-num">06</div>
+        <div class="include-title">Tienda lista para vender 24/7</div>
+        <div class="include-desc">Sales del taller con tu ecommerce activo, funcional y configurado. No a medias. Lista.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AGENDA ══════════ -->
+<section class="section agenda-section">
+  <div class="section-inner">
+    <p class="section-label">Programa del día</p>
+    <h2 class="section-title">Lo que vas a vivir el 21 de Mayo</h2>
+    <div class="divider" style="background:rgba(232,82,122,0.5)"></div>
+    <p class="section-body">4 horas enfocadas. Sin teoría infinita. Puro hacer.</p>
+
+    <div class="agenda-list">
+      <div class="agenda-item">
+        <div class="agenda-left">
+          <div class="agenda-dot">1</div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-title">Bienvenida + Bases de tu tienda online</div>
+          <div class="agenda-desc">Entiendes cómo funciona la plataforma de Tiendanube y cuál es la estructura correcta de una tienda que sí vende.</div>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-left">
+          <div class="agenda-dot">2</div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-title">Construimos tu tienda desde cero</div>
+          <div class="agenda-desc">Identidad visual, estructura, categorías y productos. Con apoyo de IA para que quede profesional y alineada a tu marca.</div>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-left">
+          <div class="agenda-dot">3</div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-title">Configuramos pagos y envíos</div>
+          <div class="agenda-desc">Tu tienda acepta tarjetas, transferencias y más. Y tus envíos quedan automatizados para que tú solo empaquetes.</div>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-left">
+          <div class="agenda-dot">4</div>
+          <div class="agenda-line"></div>
+        </div>
+        <div class="agenda-content">
+          <div class="agenda-title">Ajustes finales para una tienda optimizada</div>
+          <div class="agenda-desc">Conectas redes sociales, configuras datos de contacto y dejas todo listo para operar desde el día 1.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ BONOS ══════════ -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label">Bonos incluidos</p>
+    <h2 class="section-title">Todo lo que viene <em>de regalo</em></h2>
+    <div class="divider"></div>
+
+    <div class="bonos-grid">
+      <div class="bono-card">
+        <div class="bono-icon">🛒</div>
+        <div>
+          <div class="bono-title">Tienda en Tiendanube gratis 1 año</div>
+          <div class="bono-desc">Ahorras $1,188 MXN incluidos en tu inscripción.</div>
+        </div>
+      </div>
+      <div class="bono-card">
+        <div class="bono-icon">☕</div>
+        <div>
+          <div class="bono-title">Coffee break incluido</div>
+          <div class="bono-desc">Porque trabajar con café siempre es mejor.</div>
+        </div>
+      </div>
+      <div class="bono-card">
+        <div class="bono-icon">🎥</div>
+        <div>
+          <div class="bono-title">Tutoriales grabados de por vida</div>
+          <div class="bono-desc">Para que puedas repasar cualquier parte cuando lo necesites.</div>
+        </div>
+      </div>
+      <div class="bono-card">
+        <div class="bono-icon">🤖</div>
+        <div>
+          <div class="bono-title">Lista de prompts para ChatGPT y Gemini</div>
+          <div class="bono-desc">Para crear la estructura, banners y fotografías de producto en minutos.</div>
+        </div>
+      </div>
+      <div class="bono-card">
+        <div class="bono-icon">🎨</div>
+        <div>
+          <div class="bono-title">Plantillas y recursos exclusivos</div>
+          <div class="bono-desc">Todo lo que necesitas para operar tu tienda de forma profesional.</div>
+        </div>
+      </div>
+      <div class="bono-card">
+        <div class="bono-icon">💬</div>
+        <div>
+          <div class="bono-title">Grupo privado con soporte</div>
+          <div class="bono-desc">No te quedas sola después del taller. Seguimiento real incluido.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ACERCA DE ARE ══════════ -->
+<section class="section about-section">
+  <div class="section-inner">
+    <div class="about-inner">
+      <div class="about-img-wrap">
+        <div class="about-img-bg">
+          <img src="https://d1a9qnv764bsoo.cloudfront.net/stores/004/380/368/rte/ARE2.png" alt="Are Corona">
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-num">9</div>
+          <div class="about-badge-label">años de experiencia</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="section-label">Quién te acompaña</p>
+        <h2 class="section-title">Soy Are Corona,<br><em>y ya he estado donde tú estás</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:17px;color:var(--body);line-height:1.75;margin-bottom:16px">
+          Estratega en Ecommerce & Automatización, partner certificada de Tiendanube y partner platinum de Mercado Pago. Pero más que eso: soy una empresaria que perdió un negocio de un millón de pesos, se endeudó, lo perdió todo y volvió a empezar.
+        </p>
+        <p style="font-size:17px;color:var(--body);line-height:1.75;margin-bottom:32px">
+          Hoy acompaño a mujeres empresarias a digitalizar y escalar sus negocios porque sé exactamente lo que se siente estar ocupadísima y no ver avance. No enseño teoría. Construyo contigo.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat-box">
+            <div class="stat-num">+600</div>
+            <div class="stat-label">Mujeres capacitadas</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">+200</div>
+            <div class="stat-label">Tiendas online creadas</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">9</div>
+            <div class="stat-label">Años en ecommerce</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">✓</div>
+            <div class="stat-label">Partner certificada Tiendanube</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PRICING ══════════ -->
+<section class="section pricing-section" id="inscripcion">
+  <div class="section-inner" style="text-align:center">
+    <p class="section-label">Tu inversión</p>
+    <h2 class="section-title" style="color:var(--white)">Una sola inversión.<br><em>Un negocio que trabaja por ti.</em></h2>
+    <div class="divider" style="margin:16px auto 0;background:rgba(232,82,122,0.5)"></div>
+
+    <div class="price-card">
+      <div class="price-card-header">
+        <div class="price-was">Precio regular: $1,800 MXN</div>
+        <div class="price-now">$<span>999</span></div>
+        <div class="price-note">MXN · Pago único</div>
+      </div>
+
+      <ul class="price-includes">
+        <li>
+          <div class="check-circle"><svg viewBox="0 0 12 12" fill="none" stroke="#E8527A" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></div>
+          Taller presencial intensivo de 4 horas en CDMX
+        </li>
+        <li>
+          <div class="check-circle"><svg viewBox="0 0 12 12" fill="none" stroke="#E8527A" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></div>
+          Tu tienda en Tiendanube gratis por 1 año (valor: $1,188)
+        </li>
+        <li>
+          <div class="check-circle"><svg viewBox="0 0 12 12" fill="none" stroke="#E8527A" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></div>
+          Tutoriales grabados + plantillas + recursos exclusivos
+        </li>
+        <li>
+          <div class="check-circle"><svg viewBox="0 0 12 12" fill="none" stroke="#E8527A" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></div>
+          Lista de prompts de IA para tu negocio
+        </li>
+        <li>
+          <div class="check-circle"><svg viewBox="0 0 12 12" fill="none" stroke="#E8527A" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></div>
+          Coffee break + grupo privado con soporte post-taller
+        </li>
+        <li>
+          <div class="check-circle"><svg viewBox="0 0 12 12" fill="none" stroke="#E8527A" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg></div>
+          Acompañamiento personalizado de Are Corona todo el día
+        </li>
+      </ul>
+
+      <a href="https://www.arecorona.com/productos/taller-presencial-cdmx" target="_blank" class="cta-btn-big">
+        Apartar mi lugar ahora →
+      </a>
+    </div>
+
+    <p class="limited-note">📍 Oficinas de Tiendanube CDMX · <strong>Solo quedan 15 lugares disponibles</strong></p>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="section">
+  <div class="section-inner" style="text-align:center">
+    <p class="section-label">Preguntas frecuentes</p>
+    <h2 class="section-title">Resolvemos tus dudas <em>antes de decidir</em></h2>
+    <div class="divider" style="margin:16px auto 0"></div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Necesito saber de tecnología o programación?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Para nada. El taller está diseñado para empresarias que no tienen conocimientos técnicos. Yo te enseño todo paso a paso y estoy a tu lado durante las 4 horas para que no te quedes atascada en ningún momento.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Qué necesito llevar el día del taller?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Solo tu laptop, ganas de aprender y la info básica de tu negocio: fotos de tus productos, logotipo si tienes y datos de tu cuenta bancaria o de Mercado Pago para configurar los pagos.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Realmente saldré con mi tienda lista en 4 horas?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Sí. La estructura del taller está diseñada exactamente para eso. En 4 horas construirás tu tienda con productos cargados, pagos integrados, envíos configurados y lista para recibir pedidos. No a medias, lista.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Y después del taller? ¿Me quedaré sola?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Eso es justamente lo que me diferencia. Entras a un grupo privado con soporte, tienes acceso a tutoriales grabados y estoy disponible para resolver dudas después del taller. No te dejo sola en este proceso.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿El taller sirve para cualquier tipo de negocio?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Sí. Sirve para productos físicos (ropa, accesorios, cosméticos, repostería, artesanías…), productos digitales y servicios. Si tienes algo que vender, podemos construirte la tienda que lo merece.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Qué pasa cuando acaba mi año gratis en Tiendanube?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Puedes seguir pagando el plan de forma mensual ($99 MXN al mes) o pagar por anticipado un año más con un 25% de descuento.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Mi tienda incluye dominio personalizado?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Todas las tiendas creadas en Tiendanube cuentan con un subdominio dentro de la plataforma. Si quieres tener un dominio personalizado tendrías que comprarlo de forma adicional con un proveedor externo, o incluso hoy ya es posible comprarlo dentro de la misma plataforma de Tiendanube.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="final-cta">
+  <h2>Tu negocio ya está listo.<br>Ahora dale el sistema que merece.</h2>
+  <p>El 21 de Mayo en CDMX, construimos juntas la tienda que va a vender por ti aunque no estés pegada al celular.</p>
+  <a href="https://www.arecorona.com/productos/taller-presencial-cdmx" target="_blank" class="cta-btn-white">
+    Quiero mi lugar · $999 MXN →
+  </a>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p>© 2026 Are Corona · Ecommerce & Automatización · <a href="https://www.arecorona.com" target="_blank">arecorona.com</a> · <a href="https://instagram.com/soyarecorona" target="_blank">@soyarecorona</a></p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item')
+      const isOpen = item.classList.contains('open')
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'))
+      if (!isOpen) item.classList.add('open')
+    })
+  })
+</script>
+</body>
+</html>
